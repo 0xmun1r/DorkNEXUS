@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DorkNEXUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+    ██████╗  ██████╗ ██████╗ ██╗  ██╗      
+    ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝      
+    ██║  ██║██║   ██║██████╔╝█████╔╝       
+    ██║  ██║██║   ██║██╔══██╗██╔═██╗       
+    ██████╔╝╚██████╔╝██║  ██║██║  ██╗      
+    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝      
+                                           
+███╗   ██╗███████╗██╗  ██╗██╗   ██╗███████╗
+████╗  ██║██╔════╝╚██╗██╔╝██║   ██║██╔════╝
+██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║███████╗
+██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║
+██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║
+╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+        [ Your Central Dorking Hub $verson 0.1]
+        </div>
+        <h1>Target Console</h1>
+        <input type="text" id="targetDomain" placeholder="Enter target (e.g., example.com or an org name for GitHub)">
+        <div class="button-group">
+            <button id="googleBtn" class="tab-btn active" data-platform="google">[[ Google Dorks ]]</button>
+            <button id="githubBtn" class="tab-btn" data-platform="github">[[ GitHub Dorks ]]</button>
+        </div>
+        <button id="runBtn">[[ LAUNCH SCAN ]]</button>
+
+        <div id="dorks-container">
+            </div>
+    </div>
+
+    <script src="dorks.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
