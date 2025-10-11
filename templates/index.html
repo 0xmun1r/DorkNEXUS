@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DorkNEXUS</title>
+    <style>
+        body { background-color: #0d0d0d; color: #00ff00; font-family: 'Courier New', Courier, monospace; font-size: 16px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { color: #ff0000; text-align: center; white-space: pre; font-size: 10px; margin-bottom: 2rem; letter-spacing: 2px;}
+        h1, h2 { text-shadow: 0 0 5px #00ff00; border-bottom: 1px solid #00ff00; padding-bottom: 5px; }
+        input[type="text"] { background-color: #1a1a1a; color: #00ff00; border: 1px solid #00ff00; padding: 10px; width: 100%; margin-bottom: 10px; }
+        .button-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        button { background-color: #333; color: #00ff00; border: 1px solid #00ff00; padding: 10px 20px; cursor: pointer; flex-grow: 1; font-weight: bold; }
+        button.active { background-color: #00ff00; color: #0d0d0d; text-shadow: none; }
+        button#runBtn { background-color: #ff0000; color: #ffffff; border-color: #ff0000; width: 100%; font-size:1.2rem; }
+        details { border: 1px solid #333; margin-bottom: 10px; border-radius: 4px; }
+        summary { font-weight: bold; cursor: pointer; padding: 10px; background-color: #1a1a1a; }
+        summary:hover { background-color: #2a2a2a; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #333333; padding: 8px; text-align: left; border-left:none; border-right:none; }
+        th { background-color: #1a1a1a; }
+        tr:has(input:checked) { background-color: #ff000020; }
+        code { color: #ffffff; background-color: #222; padding: 2px 4px; }
+        .dork-content { display: none; }
+        .dork-content.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+    ██████╗  ██████╗ ██████╗ ██╗  ██╗      
+    ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝      
+    ██║  ██║██║   ██║██████╔╝█████╔╝       
+    ██║  ██║██║   ██║██╔══██╗██╔═██╗       
+    ██████╔╝╚██████╔╝██║  ██║██║  ██╗      
+    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝      
+                                           
+███╗   ██╗███████╗██╗  ██╗██╗   ██╗███████╗
+████╗  ██║██╔════╝╚██╗██╔╝██║   ██║██╔════╝
+██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║███████╗
+██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║
+██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║
+╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+                                           
+                     [ Your Central Dorking Hub ]
+        </div>
+        <h1>Target Console</h1>
+        <input type="text" id="targetDomain" placeholder="Enter target (e.g., example.com or an org name for GitHub)">
+        <div class="button-group">
+            <button id="googleBtn" class="tab-btn active" onclick="showTab('google')">[[ Google Dorks ]]</button>
+            <button id="githubBtn" class="tab-btn" onclick="showTab('github')">[[ GitHub Dorks ]]</button>
+        </div>
+        <button id="runBtn">[[ LAUNCH SCAN ]]</button>
+
+        <div id="googleDorks" class="dork-content active">
+            {% for category, dorks in google_dorks.items() %}
+                {% set category_class = 'google-' + loop.index|string %}
+                <details>
+                    <summary>
+                        <input type="checkbox" onclick="toggleCategory(this, '{{ category_class }}')"> {{ category }} ({{ dorks|length }})
+                    </summary>
+                    <table>
+                        {% for dork in dorks %}
+                        <tr>
+                            <td style="width:5%;"><input type="checkbox" class="dork-checkbox {{ category_class }}" data-platform="google" data-dork="{{ dork.dork }}"></td>
+                            <td><code>{{ dork.dork }}</code></td>
+                            <td>{{ dork.desc }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </details>
+            {% endfor %}
+        </div>
+        <div id="githubDorks" class="dork-content">
+            {% for category, dorks in github_dorks.items() %}
+                {% set category_class = 'github-' + loop.index|string %}
+                <details>
+                    <summary>
+                        <input type="checkbox" onclick="toggleCategory(this, '{{ category_class }}')"> {{ category }} ({{ dorks|length }})
+                    </summary>
+                    <table>
+                        {% for dork in dorks %}
+                        <tr>
+                            <td style="width:5%;"><input type="checkbox" class="dork-checkbox {{ category_class }}" data-platform="github" data-dork="{{ dork.dork }}"></td>
+                            <td><code>{{ dork.dork }}</code></td>
+                            <td>{{ dork.desc }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </details>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.dork-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName + 'Dorks').classList.add('active');
+            document.getElementById(tabName + 'Btn').classList.add('active');
+        }
+
+        function toggleCategory(summaryCheckbox, categoryClass) {
+            event.stopPropagation(); 
+            document.querySelectorAll(`.${categoryClass}`).forEach(dorkCheckbox => {
+                dorkCheckbox.checked = summaryCheckbox.checked;
+            });
+        }
+
+        document.getElementById('runBtn').addEventListener('click', () => {
+            const target = document.getElementById('targetDomain').value;
+            if (!target) { alert('>>> ERROR: Target required.'); return; }
+
+            const selectedDorks = document.querySelectorAll('.dork-checkbox:checked');
+            if (selectedDorks.length === 0) { alert('>>> ERROR: No dorks selected.'); return; }
+
+            selectedDorks.forEach((dork, i) => {
+                setTimeout(() => {
+                    const platform = dork.getAttribute('data-platform').toLowerCase();
+                    const dorkString = dork.getAttribute('data-dork');
+                    let query = '', url = '';
+
+                    if (platform === 'google') {
+                        query = `site:${target} ${dorkString}`;
+                        url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    } else if (platform === 'github') {
+                        query = `org:${target} ${dorkString}`;
+                        url = `https://github.com/search?q=${encodeURIComponent(query)}&type=code`;
+                    }
+                    if (url) window.open(url, '_blank');
+                }, i * 200);
+            });
+        });
+    </script>
+</body>
+</html>
