@@ -1,7 +1,7 @@
 # DorkNEXUS - Your Central Dorking Hub
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-1.0-blue.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-2.0-blue.svg" alt="Version">
   <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg" alt="Contributions Welcome">
 </p>
 
@@ -19,7 +19,7 @@ This tool is fully static and runs directly in your browser. No installation is 
 
 ## ✨ Features
 
-* **Massive Dork Arsenal:** Over 450+ carefully curated dorks for both Google and GitHub.
+* **Massive Dork Arsenal:** Over 750+ carefully curated dorks for Google,GitHub, FoFa, Shodan and Censys
 * **Clean, Hacker-Style UI:** A dark, terminal-themed interface that's easy on the eyes.
 * **Categorized & Collapsible:** Dorks are grouped by vulnerability type (e.g., Config Files, API Keys, SQLi) in clean, collapsible sections.
 * **Google & GitHub Tabs:** Easily switch between dorking platforms.
