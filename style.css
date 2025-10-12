@@ -35,6 +35,7 @@ input[type="text"] {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap; /* This makes the buttons wrap on mobile */
 }
 button {
     background-color: #333;
@@ -79,6 +80,7 @@ td {
     border-bottom: 1px solid #333;
     padding: 8px;
     text-align: left;
+    word-break: break-all;
 }
 tr:has(input:checked) {
     background-color: #ff000020;
@@ -87,4 +89,20 @@ code {
     color: #ffffff;
     background-color: #222;
     padding: 2px 4px;
+}
+/* New Footer Styles */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    color: #777;
+}
+footer a {
+    color: #00ff00;
+    text-decoration: none;
+    margin: 0 10px;
+}
+footer a:hover {
+    text-decoration: underline;
 }
