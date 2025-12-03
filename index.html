@@ -3,47 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DorkNEXUS v2</title>
+    <title>DorkNEXUS v3.0 - Cyberpunk Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="cyber-grid"></div>
+    <div class="scanline"></div>
+    <div class="particles"></div>
+    
     <div class="container">
         <div class="header">
-    ██████╗  ██████╗ ██████╗ ██╗  ██╗      
-    ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝      
-    ██║  ██║██║   ██║██████╔╝█████╔╝       
-    ██║  ██║██║   ██║██╔══██╗██╔═██╗       
-    ██████╔╝╚██████╔╝██║  ██║██║  ██╗      
-    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝      
-                                           
-███╗   ██╗███████╗██╗  ██╗██╗   ██╗███████╗
-████╗  ██║██╔════╝╚██╗██╔╝██║   ██║██╔════╝
-██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║███████╗
-██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║
-██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║
-╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
-        [ Your Central Dorking Hub $verson 2.0 ]
+            <div class="logo-container">
+                <div class="logo-badge">
+                    <span class="badge-text">DORK</span>
+                </div>
+                <div class="glitch" data-text="DORKNEXUS">DORKNEXUS</div>
+                <div class="logo-badge">
+                    <span class="badge-text">NEXUS</span>
+                </div>
+            </div>
+            <div class="version-badge">
+                <span class="pulse-dot"></span>
+                <span class="version-text">VERSION 3.0</span>
+                <span class="pulse-dot"></span>
+            </div>
+            <div class="subtitle-container">
+                <div class="matrix-rain"></div>
+                <span class="subtitle-icon">⚡</span>
+                <div class="subtitle typing-effect">ELITE PENETRATION TESTING ARSENAL</div>
+                <span class="subtitle-icon">⚡</span>
+            </div>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-dot green"></span>
+                    <span class="status-text">WEAPONS HOT</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot cyan"></span>
+                    <span class="status-text">RECON ACTIVE</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot magenta"></span>
+                    <span class="status-text">ADVANCE MODE</span>
+                </div>
+            </div>
         </div>
-        <h1>Target Console</h1>
-        <input type="text" id="targetDomain" placeholder="Enter target (e.g., example.com, IP, ASN, etc.)">
-        <div class="button-group">
-            <button id="googleBtn" class="tab-btn active" data-platform="google">[[ Google ]]</button>
-            <button id="githubBtn" class="tab-btn" data-platform="github">[[ GitHub ]]</button>
-            <button id="shodanBtn" class="tab-btn" data-platform="shodan">[[ Shodan ]]</button>
-            <button id="fofaBtn" class="tab-btn" data-platform="fofa">[[ Fofa ]]</button>
-            <button id="censysBtn" class="tab-btn" data-platform="censys">[[ Censys ]]</button>
-        </div>
-        <button id="runBtn">[[ LAUNCH SCAN ]]</button>
 
-        <div id="dorks-container">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <span class="btn-close"></span>
+                    <span class="btn-minimize"></span>
+                    <span class="btn-maximize"></span>
+                </div>
+                <div class="terminal-title">
+                    <span class="terminal-icon">▶</span> DORK_SHELL.exe
+                    <span class="terminal-version">[v3.0.0]</span>
+                </div>
+                <div class="terminal-status">
+                    <span class="loading-bar"></span>
+                </div>
+            </div>
+            
+            <div class="terminal-content">
+                <div class="command-line">
+                    <span class="command-prompt">dorknexus@recon:<span class="prompt-path">~</span>$</span>
+                    <span class="typing-cursor">_</span>
+                </div>
+
+                <div class="input-group">
+                    <span class="prompt">root@nexus:~$</span>
+                    <input type="text" id="targetDomain" placeholder="target.com" class="cyber-input">
+                    <div class="input-glow"></div>
+                </div>
+
+                <div class="platform-selector">
+                    <div class="selector-label">
+                        <span class="blink">►</span> SELECT RECONNAISSANCE PLATFORM
+                        <span class="selector-count" id="platformCount">[5 AVAILABLE]</span>
+                    </div>
+                    <div class="button-group">
+                        <button class="cyber-btn active" data-platform="google">
+                            <span class="btn-corner tl"></span>
+                            <span class="btn-corner tr"></span>
+                            <span class="btn-corner bl"></span>
+                            <span class="btn-corner br"></span>
+                            <span class="btn-icon">G</span>
+                            <span class="btn-text">GOOGLE</span>
+                            <span class="btn-subtitle">Web Intel</span>
+                            <span class="btn-glow"></span>
+                        </button>
+                        <button class="cyber-btn" data-platform="github">
+                            <span class="btn-corner tl"></span>
+                            <span class="btn-corner tr"></span>
+                            <span class="btn-corner bl"></span>
+                            <span class="btn-corner br"></span>
+                            <span class="btn-icon">⚡</span>
+                            <span class="btn-text">GITHUB</span>
+                            <span class="btn-subtitle">Code Search</span>
+                            <span class="btn-glow"></span>
+                        </button>
+                        <button class="cyber-btn" data-platform="shodan">
+                            <span class="btn-corner tl"></span>
+                            <span class="btn-corner tr"></span>
+                            <span class="btn-corner bl"></span>
+                            <span class="btn-corner br"></span>
+                            <span class="btn-icon">◉</span>
+                            <span class="btn-text">SHODAN</span>
+                            <span class="btn-subtitle">IoT Hunter</span>
+                            <span class="btn-glow"></span>
+                        </button>
+                        <button class="cyber-btn" data-platform="fofa">
+                            <span class="btn-corner tl"></span>
+                            <span class="btn-corner tr"></span>
+                            <span class="btn-corner bl"></span>
+                            <span class="btn-corner br"></span>
+                            <span class="btn-icon">◈</span>
+                            <span class="btn-text">FOFA</span>
+                            <span class="btn-subtitle">Cyber Map</span>
+                            <span class="btn-glow"></span>
+                        </button>
+                        <button class="cyber-btn" data-platform="censys">
+                            <span class="btn-corner tl"></span>
+                            <span class="btn-corner tr"></span>
+                            <span class="btn-corner bl"></span>
+                            <span class="btn-corner br"></span>
+                            <span class="btn-icon">◆</span>
+                            <span class="btn-text">CENSYS</span>
+                            <span class="btn-subtitle">Net Scan</span>
+                            <span class="btn-glow"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="runBtn" class="launch-btn">
+                    <span class="launch-pulse"></span>
+                    <span class="launch-circuits"></span>
+                    <span class="launch-icon">▶▶▶</span>
+                    <span class="launch-text">EXECUTE DORK PROTOCOL</span>
+                    <span class="launch-counter" id="selectedCount">[0 SELECTED]</span>
+                    <span class="launch-bg"></span>
+                </button>
+
+                <div id="dorks-container" class="dorks-grid">
+                    </div>
+            </div>
+        </div>
+
+        <footer class="cyber-footer">
+            <div class="footer-line-top"></div>
+            
+            <div class="creator-section">
+                <div class="creator-badge">
+                    <div class="badge-glow"></div>
+                    <div class="badge-ring"></div>
+                    <span class="creator-icon">⚡</span>
+                    <div class="creator-info">
+                        <span class="creator-label">NEXUS ARCHITECT</span>
+                        <span class="creator-name">0xMun1r</span>
+                        <span class="creator-tagline">Elite Security Researcher</span>
+                    </div>
+                    <span class="creator-icon">⚡</span>
+                </div>
             </div>
 
-        <footer>
-            <p>Follow the Creator: 0xMun1r</p>
-            <a href="https://www.facebook.com/0xmun1r" target="_blank">Facebook</a>
-            <a href="https://github.com/0xmun1r" target="_blank">GitHub</a>
-            <a href="https://t.me/telegr_mun1r" target="_blank">Telegram</a>
-            <a href="https://youtube.com/@0xmun1r?si=Tv1qFjSz122ZdJno" target="_blank">YouTube</a>
+            <div class="contact-section">
+                <div class="contact-header">
+                    <div class="header-line"></div>
+                    <span class="contact-title">ESTABLISH CONNECTION</span>
+                    <div class="header-line"></div>
+                </div>
+                
+                <div class="social-network">
+                    <a href="https://www.facebook.com/0xmun1r" target="_blank" class="contact-node facebook">
+                        <div class="node-orbit"></div>
+                        <div class="node-core">
+                            <div class="core-inner">
+                                <span class="node-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036c-2.148 0-2.797 1.603-2.797 2.87v1.101h4.188l-.582 3.667h-3.606v7.98H9.101Z"></path></svg>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="node-label">FACEBOOK</div>
+                        <div class="node-pulse"></div>
+                    </a>
+                    
+                    <a href="https://github.com/0xmun1r" target="_blank" class="contact-node github">
+                        <div class="node-orbit"></div>
+                        <div class="node-core">
+                            <div class="core-inner">
+                                <span class="node-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M12.006 2a9.847 9.847 0 0 0-6.484 2.435 9.863 9.863 0 0 0-3.345 6.138 9.921 9.921 0 0 0 1.535 7.545 9.909 9.909 0 0 0 5.437 4.195c.532.072.699-.215.699-.481 0-.276-.01-1.802-.01-2.882-2.327.42-3.033-1.048-3.18-2.227-.193-.526-.694-1.222-1.265-1.57-.457-.276-.082-.288.358-.264.634.059 1.25.563 1.51 1.056.694 1.235 1.859 1.035 2.41.768.047-.563.264-1.044.57-1.344-2.527-.3-5.226-1.332-5.226-5.832 0-1.296.421-2.484 1.197-3.444-.132-.312-.493-1.632.108-3.372 0 0 1.02-.348 3.396 1.344a11.192 11.192 0 0 1 6.307 0c2.363-1.692 3.383-1.344 3.383-1.344.611 1.74.252 3.06.12 3.372.78.96 1.188 2.148 1.188 3.444 0 4.512-2.712 5.532-5.25 5.82.348.312.624.864.624 1.728 0 1.248-.012 2.256-.012 2.568 0 .276.168.564.708.48A9.94 9.94 0 0 0 22 12.002a9.925 9.925 0 0 0-2.91-7.06A9.855 9.855 0 0 0 12.006 2Z"></path></svg>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="node-label">GITHUB</div>
+                        <div class="node-pulse"></div>
+                    </a>
+                    
+                    <a href="https://t.me/telegr_mun1r" target="_blank" class="contact-node telegram">
+                        <div class="node-orbit"></div>
+                        <div class="node-core">
+                            <div class="core-inner">
+                                <span class="node-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"></path></svg>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="node-label">TELEGRAM</div>
+                        <div class="node-pulse"></div>
+                    </a>
+                    
+                    <a href="https://youtube.com/@0xmun1r?si=Tv1qFjSz122ZdJno" target="_blank" class="contact-node youtube">
+                        <div class="node-orbit"></div>
+                        <div class="node-core">
+                            <div class="core-inner">
+                                <span class="node-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="node-label">YOUTUBE</div>
+                        <div class="node-pulse"></div>
+                    </a>
+                </div>
+
+                <div class="connection-lines">
+                    <svg class="network-svg" viewBox="0 0 1000 200">
+                        <line class="connection-line" x1="125" y1="100" x2="375" y2="100" />
+                        <line class="connection-line" x1="375" y1="100" x2="625" y2="100" />
+                        <line class="connection-line" x1="625" y1="100" x2="875" y2="100" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="footer-status">
+                <div class="status-indicator">
+                    <span class="indicator-dot"></span>
+                    <span class="indicator-text">ALL NEXUS SYSTEMS OPERATIONAL</span>
+                    <span class="indicator-bar"></span>
+                </div>
+            </div>
+
+            <div class="footer-line-bottom"></div>
         </footer>
     </div>
 
