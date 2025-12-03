@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Version-3.0-00ffff.svg?style=for-the-badge" alt="Version 3.0">
   <img src="https://img.shields.io/badge/Status-Operational-00ff88.svg?style=for-the-badge" alt="Status Operational">
-  <img src="https://img.shields.io/badge/Theme-Cyberpunk-ff00ff.svg?style=for-the-badge" alt="Contributions Open">
+  <img src="https://img.shields.io/badge/Contributions-Open-ff00ff.svg?style=for-the-badge" alt="Contributions Open">
 </p>
 
 **DorkNEXUS v3.0** is an elite, web-based open-source intelligence (OSINT) tool designed for security researchers, bug bounty hunters, and penetration testers. 
