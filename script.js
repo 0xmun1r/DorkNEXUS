@@ -1,93 +1,279 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Get references to all the important HTML elements
-    const targetInput = document.getElementById('targetDomain');
-    const dorksContainer = document.getElementById('dorks-container');
-    const runBtn = document.getElementById('runBtn');
+// DorkNEXUS v3.0 - Main Script
+// Elite Penetration Testing Arsenal
+
+let currentPlatform = 'google';
+let selectedCount = 0;
+
+// Platform URL templates
+const PLATFORM_URLS = {
+    google: 'https://www.google.com/search?q=',
+    github: 'https://github.com/search?type=code&q=',
+    shodan: 'https://www.shodan.io/search?query=',
+    fofa: 'https://fofa.info/result?qbase64=',
+    censys: 'https://search.censys.io/search?resource=hosts&q='
+};
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('%c⚡ DorkNEXUS v3.0 Initialized ⚡', 'color: #00ffff; font-size: 18px; font-weight: bold; text-shadow: 0 0 10px #00ffff;');
+    console.log('%cElite Penetration Testing Arsenal', 'color: #ff00ff; font-size: 14px; text-shadow: 0 0 10px #ff00ff;');
     
-    const ALL_DORKS = { google: GOOGLE_DORKS, github: GITHUB_DORKS, shodan: SHODAN_DORKS, fofa: FOFA_DORKS, censys: CENSYS_DORKS };
-    const tabButtons = document.querySelectorAll('.tab-btn');
+    initializePlatformButtons();
+    loadDorks(currentPlatform);
+    initializeLaunchButton();
+    initializePlaceholderAnimation();
+    updateSelectedCounter();
+});
 
-    function renderDorks(platform) {
-        dorksContainer.innerHTML = '';
-        const platformDorks = ALL_DORKS[platform];
-        
-        for (const category in platformDorks) {
-            const dorks = platformDorks[category];
-            const details = document.createElement('details');
-            let innerHTML = `<summary>${category} (${dorks.length})</summary><table>`;
-            
-            dorks.forEach(dork => {
-                innerHTML += `
-                    <tr>
-                        <td style="width:5%;"><input type="radio" class="dork-radio" name="dork-selection" data-platform="${platform}" data-dork="${dork.dork.replace(/"/g, '&quot;')}"></td>
-                        <td><code>${dork.dork}</code></td>
-                        <td>${dork.desc || ''}</td>
-                    </tr>
-                `;
-            });
-
-            innerHTML += `</table>`;
-            details.innerHTML = innerHTML;
-            dorksContainer.appendChild(details);
-        }
-    }
-
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderDorks(btn.dataset.platform);
+// Platform button initialization
+function initializePlatformButtons() {
+    const platformButtons = document.querySelectorAll('.cyber-btn[data-platform]');
+    
+    platformButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const platform = this.getAttribute('data-platform');
+            switchPlatform(platform);
         });
     });
+}
 
-    runBtn.addEventListener('click', () => {
-        const target = targetInput.value.trim();
+// Switch between platforms
+function switchPlatform(platform) {
+    currentPlatform = platform;
+    
+    // Update button states
+    const allButtons = document.querySelectorAll('.cyber-btn[data-platform]');
+    allButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    const activeButton = document.querySelector(`.cyber-btn[data-platform="${platform}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+    
+    // Load dorks for the selected platform
+    loadDorks(platform);
+    
+    // Reset selected count
+    selectedCount = 0;
+    updateSelectedCounter();
+}
+
+// Load dorks based on platform
+function loadDorks(platform) {
+    const container = document.getElementById('dorks-container');
+    
+    let dorks;
+    
+    // Select the appropriate dork collection
+    switch(platform) {
+        case 'google':
+            dorks = window.GOOGLE_DORKS || {};
+            break;
+        case 'github':
+            dorks = window.GITHUB_DORKS || {};
+            break;
+        case 'shodan':
+            dorks = window.SHODAN_DORKS || {};
+            break;
+        case 'fofa':
+            dorks = window.FOFA_DORKS || {};
+            break;
+        case 'censys':
+            dorks = window.CENSYS_DORKS || {};
+            break;
+        default:
+            dorks = {};
+    }
+    
+    // Clear container
+    container.innerHTML = '';
+    
+    // Check if dorks exist for this platform
+    if (Object.keys(dorks).length === 0) {
+        container.innerHTML = `
+            <div style="padding: 30px; text-align: center; color: var(--ghost-accent); border: 2px solid var(--ghost-accent); border-radius: 8px; background: var(--ghost-bg-darker);">
+                <p style="font-size: 1.5rem; margin-bottom: 10px;">⚠ DORKS UNAVAILABLE</p>
+                <p style="font-size: 1rem; opacity: 0.8;">Platform: ${platform.toUpperCase()}</p>
+                <p style="font-size: 0.9rem; margin-top: 15px; opacity: 0.6;">Please ensure dorks.js is properly configured for this platform.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Generate HTML for each category
+    for (const [category, dorkList] of Object.entries(dorks)) {
+        const categoryElement = createCategoryElement(category, dorkList, platform);
+        container.appendChild(categoryElement);
+    }
+    
+    // Add event listeners to checkboxes (SINGLE SELECTION MODE)
+    setTimeout(() => {
+        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                // If this box is checked, uncheck all others
+                if (this.checked) {
+                    checkboxes.forEach(otherCb => {
+                        if (otherCb !== this) {
+                            otherCb.checked = false;
+                        }
+                    });
+                }
+                updateSelectedCounter();
+            });
+        });
+    }, 100);
+}
+
+// Create category element
+function createCategoryElement(category, dorkList, platform) {
+    const details = document.createElement('details');
+    
+    const summary = document.createElement('summary');
+    summary.textContent = `${category} [${dorkList.length} DORKS]`;
+    details.appendChild(summary);
+    
+    const table = document.createElement('table');
+    
+    dorkList.forEach((dorkItem, index) => {
+        const row = table.insertRow();
+        
+        // Checkbox cell
+        const checkCell = row.insertCell();
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `dork-${platform}-${category.replace(/\s+/g, '-')}-${index}`;
+        checkbox.setAttribute('data-dork', dorkItem.dork);
+        checkbox.setAttribute('data-platform', platform);
+        checkCell.appendChild(checkbox);
+        
+        // Description cell
+        const descCell = row.insertCell();
+        const label = document.createElement('label');
+        label.setAttribute('for', checkbox.id);
+        label.innerHTML = `<strong>${dorkItem.desc}</strong><br><code>${dorkItem.dork}</code>`;
+        label.style.cursor = 'pointer';
+        descCell.appendChild(label);
+    });
+    
+    details.appendChild(table);
+    
+    return details;
+}
+
+// Update selected counter
+function updateSelectedCounter() {
+    const selectedDorks = document.querySelectorAll(`input[type="checkbox"][data-platform="${currentPlatform}"]:checked`);
+    selectedCount = selectedDorks.length;
+    
+    const counterElement = document.getElementById('selectedCount');
+    if (counterElement) {
+        counterElement.textContent = `[${selectedCount} SELECTED]`;
+    }
+}
+
+// Launch button initialization
+function initializeLaunchButton() {
+    const launchBtn = document.getElementById('runBtn');
+    
+    launchBtn.addEventListener('click', function() {
+        const target = document.getElementById('targetDomain').value.trim();
+        
         if (!target) {
-            alert('>>> ERROR: Target required.');
+            showNotification('⚠ TARGET REQUIRED', 'Please enter a target domain, IP, or ASN to begin reconnaissance', 'warning');
             return;
         }
-
-        const selectedDork = document.querySelector('.dork-radio:checked');
-        if (!selectedDork) {
-            alert('>>> ERROR: No dork selected.');
+        
+        const selectedDorks = document.querySelectorAll(`input[type="checkbox"][data-platform="${currentPlatform}"]:checked`);
+        
+        if (selectedDorks.length === 0) {
+            showNotification('⚠ NO DORK SELECTED', 'Please select a dork to execute', 'warning');
             return;
         }
-
-        const platform = selectedDork.dataset.platform;
-        let dorkString = selectedDork.dataset.dork;
-        let query = '', url = '';
         
-        // This logic replaces a placeholder like {TARGET} with the user's input
-        // This is especially useful for Censys dorks
-        if (dorkString.includes('{TARGET}')) {
-            dorkString = dorkString.replace(/{TARGET}/g, target);
-            query = dorkString;
-        }
+        // Launch scans
+        launchScans(target, selectedDorks);
+    });
+}
 
-        if (platform === 'google') {
-            query = `site:${target} ${dorkString}`;
-            url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-        } else if (platform === 'github') {
-            query = `org:${target} ${dorkString}`;
-            url = `https://github.com/search?q=${encodeURIComponent(query)}&type=code`;
-        } else if (platform === 'shodan') {
-            query = `hostname:${target} ${dorkString}`;
-            url = `https://www.shodan.io/search?query=${encodeURIComponent(query)}`;
-        } else if (platform === 'fofa') {
-            query = `domain="${target}" && ${dorkString}`;
-            url = `https://en.fofa.info/result?qbase64=${btoa(query)}`;
-        } else if (platform === 'censys') {
-            // Use the pre-formatted query if {TARGET} was used, otherwise combine
-            if (!query) {
-                 query = `services.http.response.body_str: "${target}" AND (${dorkString})`;
-            }
-            url = `https://search.censys.io/search?resource=hosts&q=${encodeURIComponent(query)}`;
+// Launch scans in new tabs
+function launchScans(target, selectedDorks) {
+    const baseURL = PLATFORM_URLS[currentPlatform];
+    
+    showNotification('✓ DORK PROTOCOL INITIATED', `Launching reconnaissance scan on ${target}`, 'success');
+    
+    selectedDorks.forEach((checkbox, index) => {
+        const dork = checkbox.getAttribute('data-dork');
+        let query;
+        
+        // Build query based on platform
+        if (currentPlatform === 'fofa') {
+            // FOFA requires base64 encoding
+            query = dork.replace(/\{target\}/g, target);
+            query = baseURL + btoa(query);
+        } else {
+            // Other platforms use standard URL encoding
+            query = dork.replace(/\{target\}/g, target);
+            query = baseURL + encodeURIComponent(query);
         }
         
-        if (url) {
-            window.open(url, '_blank');
+        // Open in new tab
+        window.open(query, '_blank');
+    });
+    
+    // Add visual feedback
+    animateLaunchButton();
+}
+
+// Animate launch button on scan
+function animateLaunchButton() {
+    const launchBtn = document.getElementById('runBtn');
+    launchBtn.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        launchBtn.style.transform = '';
+    }, 200);
+}
+
+// Show notification
+function showNotification(title, message, type) {
+    const icon = type === 'success' ? '✓' : type === 'warning' ? '⚠' : 'ℹ';
+    const color = type === 'success' ? '#00ff88' : type === 'warning' ? '#ffff00' : '#00ffff';
+    
+    console.log(`%c${icon} ${title}%c\n${message}`, 
+        `color: ${color}; font-size: 14px; font-weight: bold; text-shadow: 0 0 10px ${color};`,
+        `color: ${color}; font-size: 12px;`
+    );
+}
+
+// Placeholder animation
+function initializePlaceholderAnimation() {
+    const targetInput = document.getElementById('targetDomain');
+    
+    // Add enter key support
+    targetInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('runBtn').click();
         }
     });
+    
+    // Animated placeholders
+    const placeholders = [
+        'target.com',
+        'example.org',
+        '192.168.1.1',
+        'AS12345',
+        'company.net',
+        'subdomain.target.com'
+    ];
+    
+    let placeholderIndex = 0;
+    setInterval(() => {
+        placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+        targetInput.setAttribute('placeholder', placeholders[placeholderIndex]);
+    }, 3000);
+}
 
-    renderDorks('google');
-});
+console.log('%c⚡ DorkNEXUS SYSTEMS ONLINE ⚡', 'color: #00ff88; font-size: 14px; font-weight: bold; text-shadow: 0 0 10px #00ff88;');
+console.log('%cAll reconnaissance modules loaded successfully', 'color: #00ffff; font-size: 12px;');
