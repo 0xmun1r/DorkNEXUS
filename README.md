@@ -1,58 +1,114 @@
-# DorkNEXUS - Your Central Dorking Hub
+# ⚡DorkNEXUS v3.0⚡
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.0-blue.svg" alt="Version">
-  <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg" alt="Contributions Welcome">
+  <img src="https://img.shields.io/badge/Version-3.0-00ffff.svg?style=for-the-badge" alt="Version 3.0">
+  <img src="https://img.shields.io/badge/Status-Operational-00ff88.svg?style=for-the-badge" alt="Status Operational">
+  <img src="https://img.shields.io/badge/Theme-Cyberpunk-ff00ff.svg?style=for-the-badge" alt="Theme Cyberpunk">
 </p>
 
-DorkNEXUS is a fast, powerful, and comprehensive web-based tool for security researchers and bug bounty hunters. It provides a massive, categorized arsenal of Google and GitHub dorks in a clean, hacker-style interface. This tool is designed to make the reconnaissance phase of security testing faster and more efficient.
+**DorkNEXUS v3.0** is an elite, web-based open-source intelligence (OSINT) tool designed for security researchers, bug bounty hunters, and penetration testers. 
 
-## 🚀 Live Demo
-
-This tool is fully static and runs directly in your browser. No installation is needed.
-
-**Visit the live version here:**
-### **[https://0xmun1r.github.io/DorkNEXUS/](https://0xmun1r.github.io/DorkNEXUS/)**
+Completely overhauled with a **Cyberpunk/Sci-Fi aesthetic**, Version 3.0 transforms boring reconnaissance into an immersive experience. It features a massive arsenal of dorks across five major platforms, optimized for precision targeting.
 
 ---
 
+## 🚀 Live Access
 
-## ✨ Features
+**Initiate Protocol Here:**
+### **[https://0xmun1r.github.io/DorkNEXUS/](https://0xmun1r.github.io/DorkNEXUS/)**
 
-* **Massive Dork Arsenal:** Over 750+ carefully curated dorks for Google,GitHub, FoFa, Shodan and Censys
-* **Clean, Hacker-Style UI:** A dark, terminal-themed interface that's easy on the eyes.
-* **Categorized & Collapsible:** Dorks are grouped by vulnerability type (e.g., Config Files, API Keys, SQLi) in clean, collapsible sections.
-* **Google & GitHub Tabs:** Easily switch between dorking platforms.
-* **Zero Installation:** Fully browser-based. If you have a web browser, you can use DorkNEXUS.
-* **Static & Serverless:** Hosted for free and with high performance on GitHub Pages.
-* **Easy Selection:** Select individual dorks for precise, targeted scans.
-* **Mobile Friendly:** Works great on mobile devices, especially for use with Termux.
+*(No installation required. Runs entirely client-side in your browser.)*
 
-## 🛠️ How to Use the Live Tool
+---
 
-1.  **Visit the Website:** Navigate to **[https://0xmun1r.github.io/DorkNEXUS/](https://0xmun1r.github.io/DorkNEXUS/)**.
-2.  **Enter Target:** Input your target domain (e.g., `example.com`) or organization name in the "Target Console".
-3.  **Select Platform:** Click the **[[ Google Dorks ]]** or **[[ GitHub Dorks ]]** tab.
-4.  **Choose Dorks:** Open the category toggles and check the boxes next to the dorks you want to run.
-5.  **Launch Scan:** Click the red **[[ LAUNCH SCAN ]]** button. New browser tabs will open for each selected dork.
+## ✨ Version 3.0 Features
+
+### 🎨 Visual & UI Overhaul
+* **Cyberpunk Aesthetic:** Full neon redesign with animated grids, floating particles, glitch effects, and CRT scanlines.
+* **Interactive Terminal:** A simulated terminal window that reacts to your inputs.
+* **SVG Brand Icons:** High-quality, glowing SVG vectors for social links.
+
+### ⚔️ The Arsenal (5 Platforms)
+We have expanded beyond Google. DorkNEXUS now supports:
+* **Google:** Web intelligence and sensitive file discovery.
+* **GitHub:** Leaked secrets, keys, and source code.
+* **Shodan:** IoT, cameras, and exposed ports.
+* **FoFa:** Cyberspace mapping and asset discovery.
+* **Censys:** Internet-wide scan data and certificates.
+
+### 🎯 Precision Targeting (New!)
+* **Single-Shot Logic:** v3.0 utilizes a "Precision Mode" selector. You can only select **one dork at a time**. This prevents browser freezing and encourages focused, manual verification of results.
+* **Scope Fixed:** JavaScript variable scope issues resolved for maximum compatibility.
+
+---
+
+## 🛠️ Operational Guide
+
+1.  **Access the Terminal:** Go to **[https://0xmun1r.github.io/DorkNEXUS/](https://0xmun1r.github.io/DorkNEXUS/)**.
+2.  **Define Target:** Enter your target domain (e.g., `target.com`) in the input field.
+3.  **Select Platform:** Click one of the 5 platform buttons (Google, GitHub, Shodan, etc.).
+4.  **Engage Dork:** Expand a category and check the box for the specific dork you wish to use.
+    * *Note: Selecting a new checkbox will automatically deselect the previous one.*
+5.  **Execute:** Click the **[[ EXECUTE DorkNEXUS ]]** button. The query will open in a new tab.
+
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome! If you have a valuable dork that you think should be included, please follow these steps:
+Contributions are vital to the Nexus. If you have a powerful dork to add:
 
 1.  **Fork** this repository.
 2.  Open the `dorks.js` file.
-3.  Add your dork to the appropriate category in the `GOOGLE_DORKS` or `GITHUB_DORKS` objects. Please maintain the existing format:
+3.  **IMPORTANT:** When adding dorks, ensure they are added to the correct `window` object to ensure global scope visibility:
+    * `window.GOOGLE_DORKS`
+    * `window.GITHUB_DORKS`
+    * `window.SHODAN_DORKS`
+    * `window.FOFA_DORKS`
+    * `window.CENSYS_DORKS`
+4.  Maintain the strict JSON format:
     ```javascript
-    {"dork": "your new dork here", "desc": "A clear description of what it finds"},
+    {"dork": "site:{target} ext:xml", "desc": "Description of finding"},
     ```
-4.  Create a **Pull Request** with a title that describes the dork(s) you are adding.
+5.  Submit a Pull Request titled **"Arsenal Update: [Platform Name]"**.
 
-## 💻 Running Locally
+---
 
-If you want to run this tool locally or modify it:
+## 💻 Local Deployment
 
-1.  Clone the repository: `git clone https://github.com/0xmun1r/DorkNEXUS.git`
-2.  Navigate into the folder: `cd DorkNEXUS`
-3.  Simply open the `index.html` file in your favorite web browser.
+To run DorkNEXUS offline on your local machine:
 
+1.  Clone the repository:
+    ```bash
+    git clone [https://github.com/0xmun1r/DorkNEXUS.git](https://github.com/0xmun1r/DorkNEXUS.git)
+    ```
+2.  Navigate into the directory:
+    ```bash
+    cd DorkNEXUS
+    ```
+3.  Open `index.html` in your web browser.
+
+---
+
+<div align="center">
+
+<h3>⚡ CONNECT WITH THE ARCHITECT ⚡</h3>
+
+<p>Reach out for collaboration, bug reports, or security discussions.</p>
+
+<a href="https://www.facebook.com/0xmun1r">
+  <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook" />
+</a>
+<a href="https://github.com/0xmun1r">
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+</a>
+<a href="https://t.me/telegr_mun1r">
+  <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram" />
+</a>
+<a href="https://youtube.com/@0xmun1r?si=Tv1qFjSz122ZdJno">
+  <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube" />
+</a>
+
+<br><br>
+<p><b>0xMun1r</b> | Security Researcher</p>
+
+</div>
