@@ -1,5 +1,5 @@
 // DorkNEXUS v3.0 - Main Script
-// Elite Penetration Testing Arsenal
+// Modern Security Platform
 
 let currentPlatform = 'google';
 let selectedCount = 0;
@@ -15,19 +15,47 @@ const PLATFORM_URLS = {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('%c⚡ DorkNEXUS v3.0 Initialized ⚡', 'color: #00ffff; font-size: 18px; font-weight: bold; text-shadow: 0 0 10px #00ffff;');
-    console.log('%cElite Penetration Testing Arsenal', 'color: #ff00ff; font-size: 14px; text-shadow: 0 0 10px #ff00ff;');
+    console.log('%c◆ DorkNEXUS v3.0 Initialized', 'color: #ffffff; font-size: 18px; font-weight: bold;');
+    console.log('%cModern Security Platform', 'color: #a3a3a3; font-size: 14px;');
     
+    // Initialize opening page
+    initializeOpeningPage();
+});
+
+// Initialize opening page animation
+function initializeOpeningPage() {
+    const openingPage = document.getElementById('openingPage');
+    const mainApp = document.getElementById('mainApp');
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    
+    // Get Started button click handler
+    getStartedBtn.addEventListener('click', function() {
+        // Fade out opening page
+        openingPage.classList.add('fade-out');
+        
+        // Wait for animation then show main app
+        setTimeout(() => {
+            openingPage.style.display = 'none';
+            mainApp.classList.add('show');
+            
+            // Initialize main application
+            initializeMainApp();
+        }, 800);
+    });
+}
+
+// Initialize main application
+function initializeMainApp() {
     initializePlatformButtons();
     loadDorks(currentPlatform);
     initializeLaunchButton();
     initializePlaceholderAnimation();
     updateSelectedCounter();
-});
+}
 
 // Platform button initialization
 function initializePlatformButtons() {
-    const platformButtons = document.querySelectorAll('.cyber-btn[data-platform]');
+    const platformButtons = document.querySelectorAll('.platform-btn[data-platform]');
     
     platformButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -42,12 +70,12 @@ function switchPlatform(platform) {
     currentPlatform = platform;
     
     // Update button states
-    const allButtons = document.querySelectorAll('.cyber-btn[data-platform]');
+    const allButtons = document.querySelectorAll('.platform-btn[data-platform]');
     allButtons.forEach(btn => {
         btn.classList.remove('active');
     });
     
-    const activeButton = document.querySelector(`.cyber-btn[data-platform="${platform}"]`);
+    const activeButton = document.querySelector(`.platform-btn[data-platform="${platform}"]`);
     if (activeButton) {
         activeButton.classList.add('active');
     }
@@ -93,8 +121,8 @@ function loadDorks(platform) {
     // Check if dorks exist for this platform
     if (Object.keys(dorks).length === 0) {
         container.innerHTML = `
-            <div style="padding: 30px; text-align: center; color: var(--ghost-accent); border: 2px solid var(--ghost-accent); border-radius: 8px; background: var(--ghost-bg-darker);">
-                <p style="font-size: 1.5rem; margin-bottom: 10px;">⚠ DORKS UNAVAILABLE</p>
+            <div style="padding: 40px; text-align: center; color: var(--gray-400); background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                <p style="font-size: 1.5rem; margin-bottom: 10px; color: var(--white);">⚠ Dorks Unavailable</p>
                 <p style="font-size: 1rem; opacity: 0.8;">Platform: ${platform.toUpperCase()}</p>
                 <p style="font-size: 0.9rem; margin-top: 15px; opacity: 0.6;">Please ensure dorks.js is properly configured for this platform.</p>
             </div>
@@ -102,75 +130,67 @@ function loadDorks(platform) {
         return;
     }
     
-    // Generate HTML for each category
+    // Generate cards for each dork
     for (const [category, dorkList] of Object.entries(dorks)) {
-        const categoryElement = createCategoryElement(category, dorkList, platform);
-        container.appendChild(categoryElement);
+        dorkList.forEach((dorkItem, index) => {
+            const card = createDorkCard(category, dorkItem, index, platform);
+            container.appendChild(card);
+        });
     }
     
-    // Add event listeners to checkboxes (SINGLE SELECTION MODE)
+    // Add click listeners to cards
     setTimeout(() => {
-        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(cb => {
-            cb.addEventListener('change', function() {
-                // If this box is checked, uncheck all others
-                if (this.checked) {
-                    checkboxes.forEach(otherCb => {
-                        if (otherCb !== this) {
-                            otherCb.checked = false;
-                        }
-                    });
+        const cards = container.querySelectorAll('.dork-card');
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                const checkbox = this.querySelector('.dork-checkbox');
+                const wasSelected = this.classList.contains('selected');
+                
+                // Unselect all cards
+                cards.forEach(c => {
+                    c.classList.remove('selected');
+                    c.querySelector('.dork-checkbox').classList.remove('checked');
+                });
+                
+                // Select this card if it wasn't selected
+                if (!wasSelected) {
+                    this.classList.add('selected');
+                    checkbox.classList.add('checked');
                 }
+                
                 updateSelectedCounter();
             });
         });
     }, 100);
 }
 
-// Create category element
-function createCategoryElement(category, dorkList, platform) {
-    const details = document.createElement('details');
+// Create dork card element
+function createDorkCard(category, dorkItem, index, platform) {
+    const card = document.createElement('div');
+    card.className = 'dork-card';
+    card.setAttribute('data-dork', dorkItem.dork);
+    card.setAttribute('data-platform', platform);
     
-    const summary = document.createElement('summary');
-    summary.textContent = `${category} [${dorkList.length} DORKS]`;
-    details.appendChild(summary);
+    card.innerHTML = `
+        <div class="dork-header">
+            <div class="dork-category">${category}</div>
+            <div class="dork-checkbox"></div>
+        </div>
+        <div class="dork-name">${dorkItem.desc}</div>
+        <div class="dork-description"><code>${dorkItem.dork}</code></div>
+    `;
     
-    const table = document.createElement('table');
-    
-    dorkList.forEach((dorkItem, index) => {
-        const row = table.insertRow();
-        
-        // Checkbox cell
-        const checkCell = row.insertCell();
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `dork-${platform}-${category.replace(/\s+/g, '-')}-${index}`;
-        checkbox.setAttribute('data-dork', dorkItem.dork);
-        checkbox.setAttribute('data-platform', platform);
-        checkCell.appendChild(checkbox);
-        
-        // Description cell
-        const descCell = row.insertCell();
-        const label = document.createElement('label');
-        label.setAttribute('for', checkbox.id);
-        label.innerHTML = `<strong>${dorkItem.desc}</strong><br><code>${dorkItem.dork}</code>`;
-        label.style.cursor = 'pointer';
-        descCell.appendChild(label);
-    });
-    
-    details.appendChild(table);
-    
-    return details;
+    return card;
 }
 
 // Update selected counter
 function updateSelectedCounter() {
-    const selectedDorks = document.querySelectorAll(`input[type="checkbox"][data-platform="${currentPlatform}"]:checked`);
-    selectedCount = selectedDorks.length;
+    const selectedCards = document.querySelectorAll(`.dork-card.selected[data-platform="${currentPlatform}"]`);
+    selectedCount = selectedCards.length;
     
     const counterElement = document.getElementById('selectedCount');
     if (counterElement) {
-        counterElement.textContent = `[${selectedCount} SELECTED]`;
+        counterElement.textContent = `${selectedCount} Selected`;
     }
 }
 
@@ -182,30 +202,30 @@ function initializeLaunchButton() {
         const target = document.getElementById('targetDomain').value.trim();
         
         if (!target) {
-            showNotification('⚠ TARGET REQUIRED', 'Please enter a target domain, IP, or ASN to begin reconnaissance', 'warning');
+            showNotification('⚠ Target Required', 'Please enter a target domain, IP, or ASN to begin reconnaissance', 'warning');
             return;
         }
         
-        const selectedDorks = document.querySelectorAll(`input[type="checkbox"][data-platform="${currentPlatform}"]:checked`);
+        const selectedCards = document.querySelectorAll(`.dork-card.selected[data-platform="${currentPlatform}"]`);
         
-        if (selectedDorks.length === 0) {
-            showNotification('⚠ NO DORK SELECTED', 'Please select a dork to execute', 'warning');
+        if (selectedCards.length === 0) {
+            showNotification('⚠ No Dork Selected', 'Please select a dork to execute', 'warning');
             return;
         }
         
         // Launch scans
-        launchScans(target, selectedDorks);
+        launchScans(target, selectedCards);
     });
 }
 
 // Launch scans in new tabs
-function launchScans(target, selectedDorks) {
+function launchScans(target, selectedCards) {
     const baseURL = PLATFORM_URLS[currentPlatform];
     
-    showNotification('✓ DORK PROTOCOL INITIATED', `Launching reconnaissance scan on ${target}`, 'success');
+    showNotification('✓ Protocol Initiated', `Launching reconnaissance scan on ${target}`, 'success');
     
-    selectedDorks.forEach((checkbox, index) => {
-        const dork = checkbox.getAttribute('data-dork');
+    selectedCards.forEach((card, index) => {
+        const dork = card.getAttribute('data-dork');
         let query;
         
         // Build query based on platform
@@ -239,10 +259,10 @@ function animateLaunchButton() {
 // Show notification
 function showNotification(title, message, type) {
     const icon = type === 'success' ? '✓' : type === 'warning' ? '⚠' : 'ℹ';
-    const color = type === 'success' ? '#00ff88' : type === 'warning' ? '#ffff00' : '#00ffff';
+    const color = type === 'success' ? '#ffffff' : type === 'warning' ? '#a3a3a3' : '#ffffff';
     
     console.log(`%c${icon} ${title}%c\n${message}`, 
-        `color: ${color}; font-size: 14px; font-weight: bold; text-shadow: 0 0 10px ${color};`,
+        `color: ${color}; font-size: 14px; font-weight: bold;`,
         `color: ${color}; font-size: 12px;`
     );
 }
@@ -260,8 +280,8 @@ function initializePlaceholderAnimation() {
     
     // Animated placeholders
     const placeholders = [
-        'target.com',
-        'example.org',
+        'example.com',
+        'target.org',
         '192.168.1.1',
         'AS12345',
         'company.net',
@@ -275,5 +295,5 @@ function initializePlaceholderAnimation() {
     }, 3000);
 }
 
-console.log('%c⚡ DorkNEXUS SYSTEMS ONLINE ⚡', 'color: #00ff88; font-size: 14px; font-weight: bold; text-shadow: 0 0 10px #00ff88;');
-console.log('%cAll reconnaissance modules loaded successfully', 'color: #00ffff; font-size: 12px;');
+console.log('%c◆ DorkNEXUS Systems Online', 'color: #ffffff; font-size: 14px; font-weight: bold;');
+console.log('%cAll reconnaissance modules loaded successfully', 'color: #a3a3a3; font-size: 12px;');
