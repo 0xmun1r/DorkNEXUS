@@ -8,7 +8,7 @@
 
 **DorkNEXUS v3.0** is an elite, web-based open-source intelligence (OSINT) tool designed for security researchers, bug bounty hunters, and penetration testers. 
 
-Completely overhauled with a **Cyberpunk/Sci-Fi aesthetic**, Version 3.0 transforms boring reconnaissance into an immersive experience. It features a massive arsenal of dorks across five major platforms, optimized for precision targeting.
+ It features a massive arsenal of dorks across five major platforms, optimized for precision targeting.
 
 ---
 
@@ -23,10 +23,6 @@ Completely overhauled with a **Cyberpunk/Sci-Fi aesthetic**, Version 3.0 transfo
 
 ## ✨ Version 3.0 Features
 
-### 🎨 Visual & UI Overhaul
-* **Cyberpunk Aesthetic:** Full neon redesign with animated grids, floating particles, glitch effects, and CRT scanlines.
-* **Interactive Terminal:** A simulated terminal window that reacts to your inputs.
-* **SVG Brand Icons:** High-quality, glowing SVG vectors for social links.
 
 ### ⚔️ The Arsenal (5 Platforms)
 We have expanded beyond Google. DorkNEXUS now supports:
@@ -73,19 +69,6 @@ Contributions are vital to the Nexus. If you have a powerful dork to add:
 
 ---
 
-## 💻 Local Deployment
-
-To run DorkNEXUS offline on your local machine:
-
-1.  Clone the repository:
-    ```bash
-    git clone [https://github.com/0xmun1r/DorkNEXUS.git](https://github.com/0xmun1r/DorkNEXUS.git)
-    ```
-2.  Navigate into the directory:
-    ```bash
-    cd DorkNEXUS
-    ```
-3.  Open `index.html` in your web browser.
 
 ---
 
